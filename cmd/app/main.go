@@ -5,21 +5,19 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/nathanielhall/cloud-native-go/app/app"
 	"github.com/nathanielhall/cloud-native-go/app/router"
 	"github.com/nathanielhall/cloud-native-go/config"
 	lr "github.com/nathanielhall/cloud-native-go/util/logger"
 )
- 
 
 func main() {
 	appConf := config.AppConfig()
-	
+
 	logger := lr.New(appConf.Debug)
 
-    // application := app.New(logger)
-    // appRouter := router.New(application)	
-
-	appRouter := router.New()
+	application := app.New(logger)
+	appRouter := router.New(application)
 
 	address := fmt.Sprintf(":%d", appConf.Server.Port)
 
@@ -37,4 +35,3 @@ func main() {
 		log.Fatal("Server startup failed")
 	}
 }
- 
