@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 
+	dbConn "github.com/nathanielhall/cloud-native-go/adapter/db"
 	"github.com/nathanielhall/cloud-native-go/app/app"
 	"github.com/nathanielhall/cloud-native-go/app/router"
 	"github.com/nathanielhall/cloud-native-go/config"
@@ -16,7 +17,24 @@ func main() {
 
 	logger := lr.New(appConf.Debug)
 
-	application := app.New(logger)
+	db, err := dbConn.New(appConf)
+	if err != nil {
+		logger.Fatal().Err(err).Msg("")
+		return
+	}
+	// FIXME: fails since database hasn't been created. Need to setup migrations?
+	if err = db.Ping(); err != nil {
+		logger.Fatal().Err(err).Msg("")
+	} else {
+		logger.Debug().Msg("Database ready to accept connections")
+	}
+
+	// if appConf.Debug {
+	// 	db.LogMode(true)
+	// }
+
+	application := app.New(logger, db)
+
 	appRouter := router.New(application)
 
 	address := fmt.Sprintf(":%d", appConf.Server.Port)

@@ -8,3 +8,14 @@ services:
       - ./docker/app/.env
     ports:
       - "8080:8080"
+  db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_DATABASE=nest
+    ports:
+      - 5434:5432
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
