@@ -11,6 +11,11 @@ type App struct {
 	db     *sql.DB
 }
 
+const (
+    appErrDataAccessFailure   = "data access failure"
+    appErrJsonCreationFailure = "json creation failure"
+)
+
 func New(logger *logger.Logger, db *sql.DB) *App {
 	return &App{logger: logger, db: db}
 }

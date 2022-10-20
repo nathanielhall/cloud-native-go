@@ -36,5 +36,4 @@ func AppConfig() *Conf {
 	}
 
 	return &c
-
 }
