@@ -1,10 +1,9 @@
 package repository
 
 import (
-	"database/sql"
-
 	"github.com/nathanielhall/cloud-native-go/model"
 	"github.com/nathanielhall/cloud-native-go/util/logger"
+	"gorm.io/gorm"
 )
 
 // repo := TodoRepository.New(db, logger)
@@ -14,35 +13,27 @@ import (
 // err := repo.Save(todo)
 
 type todoRepository struct {
-	db     *sql.DB
+	db *gorm.DB
 	lr *logger.Logger
 }
 
-func NewTodoRepository(db *sql.DB, logger *logger.Logger) *todoRepository {
+func NewTodoRepository(db *gorm.DB, logger *logger.Logger) *todoRepository {
 	return &todoRepository{
-		db:     db,
+		db: db,
 		lr: logger,
 	}
 }
 
 func (repo *todoRepository) GetAll() ([]model.Todo, error) {
-	var todo model.Todo
+
+
+	repo.lr.Debug().Msg("GetAll")
+
 	var todos []model.Todo
+	result := repo.db.Find(&todos)
 
-	rows, err := repo.db.Query("select * from todos")
-	if err != nil {
-		repo.lr.Fatal().Err(err).Msg("Error TodoRepository.GetAll")
-	}
-	defer rows.Close()
-	for rows.Next() {
-		if err := rows.Scan(&todo.ID, &todo.Description, &todo.Priority, &todo.Status); err != nil {
-			repo.lr.Fatal().Err(err).Msg("Error when trying to get Todo by ID")
-			return nil, err
-		}
-		repo.lr.Info().Msg("log rows next")
-	}
-
-	return todos, nil
+	repo.lr.Info().Msgf("Starting server %v", result.RowsAffected)
+	return nil, nil
 }
 
 // func (repo TodoRepository) Get(id int32) (model.Todo, error) {

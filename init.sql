@@ -1,8 +1,8 @@
-CREATE DATABASE todos_db;
+CREATE DATABASE IF NOT EXISTS todos_db;
 
 \connect todos_db;
 
-CREATE TABLE todos(
+CREATE TABLE IF NOT EXISTS todos(
     id SERIAL NOT NULL PRIMARY KEY,
     description VARCHAR(100),
     priority INT,

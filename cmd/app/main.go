@@ -17,34 +17,14 @@ func main() {
 
 	logger := lr.New(appConf.Debug)
 
-	logger.Debug().Msg("TEST")
-
-	db, _ := dbConn.NewDb(appConf, logger)
-	// if appConf.Debug {
-		// db.LogMode(true)
-	// }
-
-	// if err != nil {
-	// 	logger.Debug().Msg("TEST2")
-	// 	logger.Fatal().Err(err).Msg("")
-	// 	return
-	// }
-
-	// logger.Debug().Msg("TEST3")
-
-	// FIXME: fails since database hasn't been created. Need to setup migrations?
-	// if err = db.Ping(); err != nil {
-	// 	logger.Fatal().Err(err).Msg("db.Ping() failed")
-	// } else {
-	// 	logger.Debug().Msg("Database ready to accept connections")
-	// }
-
-	// logger.Debug().Msg("TEST5")
-	// if appConf.Debug {
-	// 	db.LogMode(true)
-	// }
+	db, err := dbConn.NewDb(appConf, logger)
+	if err != nil {
+		logger.Fatal().Err(err).Msg("DB connection start failure")
+		return
+	}
 
 	application := app.New(logger, db)
+
 
 	appRouter := router.New(application)
 

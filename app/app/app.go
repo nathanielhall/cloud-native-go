@@ -1,14 +1,13 @@
 package app
 
 import (
-	"database/sql"
-
 	"github.com/nathanielhall/cloud-native-go/util/logger"
+	"gorm.io/gorm"
 )
 
 type App struct {
 	logger *logger.Logger
-	db     *sql.DB
+	db     *gorm.DB
 }
 
 const (
@@ -16,7 +15,7 @@ const (
     appErrJsonCreationFailure = "json creation failure"
 )
 
-func New(logger *logger.Logger, db *sql.DB) *App {
+func New(logger *logger.Logger, db *gorm.DB) *App {
 	return &App{logger: logger, db: db}
 }
 

@@ -19,6 +19,7 @@ type dbConf struct {
 	Username string `env:"DB_USER,required"`
 	Password string `env:"DB_PASS,required"`
 	DbName   string `env:"DB_NAME,required"`
+	Debug    bool   `env:"DB_DEBUG,required"`
 }
 
 type serverConf struct {
@@ -31,6 +32,24 @@ type serverConf struct {
 func AppConfig() *Conf {
 	var c Conf
 
+	if err := envdecode.StrictDecode(&c); err != nil {
+		log.Fatalf("Failed to decode: %s", err)
+	}
+
+	return &c
+}
+
+func New() *Conf {
+	var c Conf
+	if err := envdecode.StrictDecode(&c); err != nil {
+		log.Fatalf("Failed to decode: %s", err)
+	}
+
+	return &c
+}
+
+func NewDB() *dbConf {
+	var c dbConf	
 	if err := envdecode.StrictDecode(&c); err != nil {
 		log.Fatalf("Failed to decode: %s", err)
 	}
