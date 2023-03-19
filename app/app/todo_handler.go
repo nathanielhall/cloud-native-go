@@ -21,14 +21,11 @@ func (app *App) HandleListTodos(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if todos == nil {
-		fmt.Fprint(w, "[]")
+ 	    fmt.Fprint(w, "[]")
 		return
 	}
 
-	app.logger.Log().Msg("TODOS")
-
-	// dtos := todos.ToDto()
-	if err := json.NewEncoder(w).Encode(todos); err != nil {
+	if err := json.NewEncoder(w).Encode(todos.ToDto()); err != nil {
 		app.logger.Warn().Err(err).Msg("")
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, `{"error": "%v"}`, appErrJsonCreationFailure)
