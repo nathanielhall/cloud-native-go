@@ -1,22 +1,20 @@
-version: '3'
+version: '3.9'
 services:
+
   app:
-    build:
-      context: .
-      dockerfile: ./docker/app/Dockerfile
-    env_file:
-      - ./docker/app/.env
+    build: .
+    env_file: .env
     ports:
       - "8080:8080"
     command: [ "sh", "-c", "/cloud-native-go/bin/migrate up && /cloud-native-go/bin/app" ]
     restart: always
 
   db:
-    image: postgres:alpine 
+    image: postgres:alpine
     environment:
-      - POSTGRES_DB=todos_db
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=123
+      - POSTGRES_DB=myapp_db
+      - POSTGRES_USER=myapp_user
+      - POSTGRES_PASSWORD=myapp_pass
     ports:
       - "5432:5432"
     restart: always
