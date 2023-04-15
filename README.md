@@ -1,5 +1,5 @@
 # Cloud Native Go
-> This repository was created as a learning resource. 
+> This repository provides a CRUD API for Todo items.
 
 ## Setup
 ```shell
@@ -7,6 +7,17 @@ git clone git@github.com:nathanielhall/cloud-native-go.git
 cd cloud-native-go
 docker compose build && docker compose up
 ```
+
+## Todos
+
+| Name        | HTTP Method | Route          |
+|-------------|-------------|----------------|
+| List  | GET         | /v1/todos      |
+| Create | POST        | /v1/todos      |
+| Read | GET         | /v1/todos/{id} |
+| Update | PUT         | /v1/todos/{id} |
+| Delete | DELETE      | /v1/todos/{id} |
+
 
 ## Technical Decisions
 - [Chi](https://github.com/go-chi/chi) as the Router
