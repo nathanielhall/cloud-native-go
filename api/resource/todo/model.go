@@ -27,6 +27,23 @@ type Todo struct {
 
 type Todos []*Todo
 
+type Form struct {
+	Name 		  string `json:"name" form:"required,max=255"`
+	Description   string `json:"description"`
+	Priority      int    `json:"priority"`
+	Status        string `json:"status"`
+}
+
+func (f *Form) ToModel() *Todo {
+	return &Todo{
+		ID: uuid.New(),
+		Name: f.Name,
+		Description: f.Description,
+		Priority: f.Priority,
+		Status: f.Status,
+	}
+}
+
 func (t *Todo) ToDto() *DTO {
 	return &DTO{
 		ID:  t.ID.String(),

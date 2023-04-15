@@ -11,6 +11,7 @@ import (
 	"github.com/nathanielhall/cloud-native-go/api/router"
 	"github.com/nathanielhall/cloud-native-go/config"
 	"github.com/nathanielhall/cloud-native-go/util/logger"
+	"github.com/nathanielhall/cloud-native-go/util/validator"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -22,6 +23,7 @@ const fmtDBString = "host=%s user=%s password=%s dbname=%s port=%d sslmode=disab
 func main() {
 	c := config.New()
 	l := logger.New(c.Debug)
+	v := validator.New()
 
 	var logLevel gormlogger.LogLevel
 	if c.Db.Debug {
@@ -37,7 +39,7 @@ func main() {
 		return
 	} 
 
-	router := router.New(l, db)
+	router := router.New(l, v, db)
 
 	s := &http.Server{
 		Addr:         fmt.Sprintf(":%d", c.Server.Port),
