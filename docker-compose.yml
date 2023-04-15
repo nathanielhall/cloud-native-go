@@ -6,7 +6,7 @@ services:
     env_file: .env
     ports:
       - "8080:8080"
-    command: [ "sh", "-c", "/cloud-native-go/bin/migrate up && /cloud-native-go/bin/app" ]
+    command: [ "sh", "-c", "/cloud-native-go/bin/migrate up && /cloud-native-go/bin/api" ]
     restart: always
 
   db:

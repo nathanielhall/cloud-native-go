@@ -7,8 +7,8 @@ COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
 
-RUN go build -ldflags '-w -s' -a -o ./bin/app ./cmd/app \
+RUN go build -ldflags '-w -s' -a -o ./bin/api ./cmd/api \
     && go build -ldflags '-w -s' -a -o ./bin/migrate ./cmd/migrate
 
-CMD ["/cloud-native-go/bin/app"]
+CMD ["/cloud-native-go/bin/api"]
 EXPOSE 8080
